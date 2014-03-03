@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app>
+<head>
+	<title>Rudy's Angular 2</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+	<script src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+	<script type="text/javascript">
+		function TodoCtrl($scope){
+			$scope.todos = [
+				{text: 'Build a list', done: false}, 
+				{text: 'Practice Angular', done: false}
+			];
+
+			$scope.getTotalTodos = function(){
+				return $scope.todos.length;
+			}	
+
+			$scope.clearCompleted = function(){
+				$scope.todos = _.filter($scope.todos, function(todo){
+					return !todo.done;
+				});
+			}	
+
+			$scope.addTodo = function(){
+				$scope.todos.push({text: $scope.formTodoText, done: false});
+				$scope.formTodoText = "";
+			}
+			
+		}
+	</script>
+	<style type="text/css">
+		.done-true{
+			text-decoration: line-through;
+			color: #dddddd;
+		}
+	</style>
+</head>
+<body
+	<div ng-controller="TodoCtrl">
+		<h2>Total todos: {{getTotalTodos()}}</h2>
+		<ul>
+			<li ng-repeat="todo in todos">
+				<input type="checkbox" ng-model="todo.done">
+				<span class="done-{{todo.done}}">{{todo.text}}</span>
+			</li>
+		</ul>
+		<form>
+			<input type="text" ng-model="formTodoText" ng-model-instant>
+			<button ng-click="addTodo()">Add</button>
+		</form>
+		<button ng-click="clearCompleted()">Clear Completed</button>
+
+	</div>
+</body>
+</html>
